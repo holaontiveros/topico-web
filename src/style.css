@@ -1,0 +1,113 @@
+@import "tailwindcss";
+
+@theme {
+    --animate-breathe-1: breathe-1 7s    ease-in-out infinite 0s;
+    --animate-breathe-2: breathe-2 8.5s  ease-in-out infinite -1.2s;
+    --animate-breathe-3: breathe-3 6.8s  ease-in-out infinite -3.1s;
+    --animate-breathe-4: breathe-4 9s    ease-in-out infinite -0.7s;
+    --animate-breathe-5: breathe-5 7.5s  ease-in-out infinite -2.4s;
+    --animate-floor:     floor-pulse 9s  ease-in-out infinite;
+    --font-family: 'Work Sans', sans-serif;
+  }
+ 
+@layer base {
+  @keyframes breathe-1 {
+    0%, 100% { opacity: 0.38; transform: translateY(0px); }
+    50%       { opacity: 0.55; transform: translateY(-3px); }
+  }
+  @keyframes breathe-2 {
+    0%, 100% { opacity: 0.28; transform: translateY(0px); }
+    50%       { opacity: 0.48; transform: translateY(-5px); }
+  }
+  @keyframes breathe-3 {
+    0%, 100% { opacity: 0.35; transform: translateY(0px); }
+    50%       { opacity: 0.52; transform: translateY(-2px); }
+  }
+  @keyframes breathe-4 {
+    0%, 100% { opacity: 0.32; transform: translateY(0px); }
+    50%       { opacity: 0.50; transform: translateY(-6px); }
+  }
+  @keyframes breathe-5 {
+    0%, 100% { opacity: 0.42; transform: translateY(0px); }
+    50%       { opacity: 0.60; transform: translateY(-4px); }
+  }
+  @keyframes shimmer {
+    0%   { transform: translateY(100%); opacity: 0; }
+    20%  { opacity: 1; }
+    80%  { opacity: 0.6; }
+    100% { transform: translateY(-100%); opacity: 0; }
+  }
+  @keyframes floor-pulse {
+    0%, 100% { opacity: 0.4; }
+    50%       { opacity: 1; }
+  }
+}
+ 
+@layer utilities {
+  /* Bar heights + breathing animations */
+  .bar-1 { height: 35%; animation: var(--animate-breathe-1); }
+  .bar-2 { height: 48%; animation: var(--animate-breathe-2); }
+  .bar-3 { height: 35%; animation: var(--animate-breathe-3); }
+  .bar-4 { height: 54%; animation: var(--animate-breathe-4); }
+  .bar-5 { height: 62%; animation: var(--animate-breathe-5); }
+
+  @media (min-width: 640px) {
+    .bar-1 { height: 30%; }
+    .bar-2 { height: 42%; }
+    .bar-3 { height: 30%; }
+    .bar-4 { height: 50%; }
+    .bar-5 { height: 58%; }
+  }
+
+  /* Shimmer layer */
+  .shimmer-layer {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .shimmer-layer::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    height: 60%;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(255,255,255,0.025) 40%,
+      rgba(255,255,255,0.045) 50%,
+      rgba(255,255,255,0.025) 60%,
+      transparent 100%
+    );
+    animation: shimmer var(--shimmer-dur, 12s) ease-in-out infinite var(--shimmer-delay, 0s);
+  }
+  .shimmer-1::after { --shimmer-dur: 14s; --shimmer-delay: -2s; }
+  .shimmer-2::after { --shimmer-dur: 11s; --shimmer-delay: -5s; }
+  .shimmer-3::after { --shimmer-dur: 16s; --shimmer-delay: -1s; }
+  .shimmer-4::after { --shimmer-dur: 12s; --shimmer-delay: -8s; }
+  .shimmer-5::after { --shimmer-dur: 13s; --shimmer-delay: -3s; }
+
+  /* Bar border ring */
+  .bar-inner {
+    position: relative;
+    width: 100%;
+    will-change: opacity, transform;
+  }
+  .bar-inner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    pointer-events: none;
+  }
+}
+
+
+/* font face for Work Sans */
+@font-face {
+  font-family: 'Work Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/WorkSans-Regular.woff2') format('woff2'),
+       url('/fonts/WorkSans-Regular.woff') format('woff');
+}
